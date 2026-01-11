@@ -24,9 +24,9 @@ UI-to-API mapping was performed using **network tab inspection** and validating 
 
 I followed the following process for identifying the mapping:
 1. Find out the order of execution of the UI steps required to create the expected promotion. By discovering the vendure demo site the  sequence of UI actions was :
-i. Create Customer Group 
-    Rightclick customer -> right click customer group -> input(customer group name = VIP) ->right click add customer group 
-ii. Create Promotion 
+i. Create Customer Group <br>
+    Rightclick customer -> right click customer group -> input(customer group name = VIP) ->right click add customer group <br> 
+ii. Create Promotion <br>
     rightclick marketing -> rightclick promotions-> input(promotion_name = Black Friday) -> input (coupon_code = BF2024) -> add condition1 = customer bill greater than input = 100
 add condition 2 -> customer part of select = VIP customer group -> toggle enabled -> click create 
 
