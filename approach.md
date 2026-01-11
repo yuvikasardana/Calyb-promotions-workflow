@@ -1,10 +1,8 @@
 # Approach
 
-## Overview
-
 This assignment is a workflow reverse-engineering problem.  
 The objective was to identify how user intent expressed through the Admin UI maps to underlying API-level state changes, and to represent that mapping in a reusable, machine-readable structure.
-
+The Request: "Create a Black Friday coupon code 'BF2024'. It should apply a 15% discount, but only if the order total is above $100 AND the customer is in the 'VIP' group."
 The workflow focuses exclusively on **state-changing operations**, their required inputs, returned identifiers, and inter-step dependencies.
 
 ---
