@@ -5,7 +5,6 @@ The objective was to identify how user intent expressed through the Admin UI map
 The Request: "Create a Black Friday coupon code 'BF2024'. It should apply a 15% discount, but only if the order total is above $100 AND the customer is in the 'VIP' group."
 The workflow focuses exclusively on **state-changing operations**, their required inputs, returned identifiers, and inter-step dependencies.
 
----
 
 ## Assumptions
 
@@ -18,7 +17,6 @@ I made the following assumptions to complete the assignment:
 - Population of customer groups (i.e., assigning customers to the VIP group) is treated as business data and is intentionally out of scope.
 
 
----
 
 ## Heuristic: Mapping 
 
