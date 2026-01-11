@@ -49,8 +49,6 @@ Examples:
 
 This heuristic ensures mappings are grounded in **actual system behavior**, and not derived from only the UI text/inputs.
 
----
-
 ## Dependency Discovery
 
 Dependencies were identified by tracking **IDs returned from mutations** and observing where those IDs were required as inputs in subsequent mutations.
@@ -60,8 +58,6 @@ For example:
 - The promotion condition `customer_group` requires that ID as `customerGroupId`
 
 Dependencies are modeled explicitly using ID references even when the UI invovles looking up for the names, ensuring deterministic execution and avoiding hard-coded values.
-
----
 
 ## Structural Standardization
 
@@ -76,7 +72,6 @@ Design principles:
 
 This structure is minimal, machine-readable, and suitable for automated execution.
 
----
 
 ## Universal Generalization 
 
