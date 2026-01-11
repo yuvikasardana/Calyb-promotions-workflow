@@ -1,0 +1,87 @@
+{
+  "workflow": "Create Black Friday VIP Coupon",
+  "user_intent": "Create a coupon-based promotion with conditional eligibility",
+  "entities": {
+    "customer_group": {
+      "name": "vip_group"
+    },
+    "promotion": {
+      "name": "black_friday_promotion"
+    }
+  },
+  "steps": [
+    {
+      "step_id": "create_customer_group",
+      "type": "mutation",
+      "operation": "createCustomerGroup",
+      "inputs": {
+        "name": "VIP",
+        "customerIds": [],
+        "customFields": {}
+      },
+      "outputs": {
+        "customer_group_id": "$.data.createCustomerGroup.id"
+      }
+    },
+    {
+      "step_id": "create_promotion",
+      "type": "mutation",
+      "operation": "createPromotion",
+      "inputs": {
+        "enabled": true,
+        "couponCode": "BF2024",
+        "usageLimit": 0,
+        "perCustomerUsageLimit": 0,
+        "startsAt": null,
+        "endsAt": null,
+        "conditions": [
+          {
+            "code": "minimum_order_amount",
+            "arguments": [
+              {
+                "name": "amount",
+                "value": "10000"
+              },
+              {
+                "name": "taxInclusive",
+                "value": "false"
+              }
+            ]
+          },
+          {
+            "code": "customer_group",
+            "arguments": [
+              {
+                "name": "customerGroupId",
+                "value": "{from:create_customer_group.customer_group_id}"
+              }
+            ]
+          }
+        ],
+        "actions": [
+          {
+            "code": "order_percentage_discount",
+            "arguments": [
+              {
+                "name": "discount",
+                "value": "15"
+              }
+            ]
+          }
+        ],
+        "translations": [
+          {
+            "languageCode": "en",
+            "name": "Black Friday",
+            "description": "",
+            "customFields": {}
+          }
+        ],
+        "customFields": {}
+      },
+      "outputs": {
+        "promotion_id": "$.data.createPromotion.id"
+      }
+    }
+  ]
+}
