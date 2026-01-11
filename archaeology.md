@@ -4,15 +4,13 @@ This document records non-obvious behaviors, defaults, and semantic gaps discove
 
 These findings were identified through Network tab inspection and schema validation.
 
----
 
-## Monetary Values Use Minor Units
+### Monetary Values Use Minor Units
 
 Prices and monetary thresholds entered in the UI (e.g. `$100`) are converted to **integer minor units** (`10000 cents`) in API payloads.
 
 This conversion is not visible in the UI and must be handled explicitly when modeling workflows.
 
----
 
 ## Promotions Are Governed by Lifecycle State
 
@@ -24,7 +22,6 @@ Promotions have an explicit lifecycle controlled by the `enabled` flag.
 
 A promotion with `enabled = true` and `startsAt / endsAt = null` is immediately and indefinitely active.
 
----
 
 ## Dates are Optional
 
@@ -35,7 +32,6 @@ The fields `startsAt` and `endsAt` are optional in `createPromotion`.
 
 This implies that time-based activation is enforced only when explicitly configured.
 
----
 
 ## Conditions and Actions Are Nested, Not Separate Mutations
 
@@ -43,7 +39,6 @@ Promotion conditions and actions are submitted as nested `ConfigurableOperationI
 
 the UI makes it look like you are “adding conditions” and “adding actions” as separate steps but the API never creates them independently
 
----
 
 ## UI Lookups Use Queries, Not Workflow Steps
 
@@ -56,7 +51,6 @@ These queries:
 
 The API ultimately requires a stable `customerGroupId` for the promotion to be created, not the group nameas suggested by the UI.
 
----
 
 ## Required Fields Not Exposed in the UI
 
@@ -67,7 +61,6 @@ Some API-required fields are not explicitly surfaced in the UI and are sent with
 
 These fields must still be included in mutation inputs for successful execution.
 
----
 
 ## Localization Is Mandatory but not Necessary
 
