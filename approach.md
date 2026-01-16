@@ -9,7 +9,6 @@ The Request: "Create a Black Friday coupon code 'BF2024'. It should apply a 15% 
 
 The workflow focuses exclusively on **state-changing operations**, their required inputs, returned identifiers, and inter-step dependencies.
 
----
 
 ## Assumptions
 
@@ -22,7 +21,6 @@ I made the following assumptions to complete the assignment:
 - Population of customer groups (i.e., assigning customers to the VIP group) is treated as business data and is intentionally out of scope.
 
 
----
 
 ## Heuristic: Mapping 
 
@@ -78,8 +76,6 @@ Examples:
 
 
 This heuristic ensures mappings are grounded in **actual system behavior**, and not derived from only the UI text/inputs.
-
----
 
 ## Dependency Discovery
 

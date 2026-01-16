@@ -86,7 +86,25 @@ Where `memberIds` contains country IDs, not country codes.
 
 **Impact:** workflows must treat countries as “zone members” represented via IDs.
 
----
+## Track B (Shipping)
+
+
+### Country IDs must be discovered via the `countries` query
+Countries cannot be added to a zone using name/code directly.  
+The UI searches countries by firing `countries(options)` with filter `{ name contains, code contains }`, then uses the returned `id` in `addMembersToZone`.
+
+**Impact:** adding Australia/New Zealand is inherently a discovery + mutation process.
+
+
+###  Zone membership uses `memberIds` as country IDs
+Adding a country to a zone calls:
+
+`addMembersToZone(zoneId, memberIds)`
+
+Where `memberIds` contains country IDs, not country codes.
+
+**Impact:** workflows must treat countries as “zone members” represented via IDs.
+
 
 ###  Flat rate shipping uses default calculator with required args
 The shipping method uses:
