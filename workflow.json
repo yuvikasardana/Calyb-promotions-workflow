@@ -1,4 +1,8 @@
 {
+  "platform": "Vendure",
+  "workflows":[
+  {
+  "track": "A",
   "workflow": "Create Black Friday VIP Coupon",
   "user_intent": "Create a coupon-based promotion with conditional eligibility",
   "entities": {
@@ -84,4 +88,156 @@
       }
     }
   ]
+  },
+  {
+    "track":"B",
+    "workflow": " Oceania Shipping Zone + Flat Rate Shipping Method",
+    "user_intent": "Create shipping zone 'Oceania' with Australia + New Zealand, then create a $15 flat rate shipping method intended to apply only to this zone",
+    "steps": [
+      {
+        "step_id": "create_zone",
+        "type": "mutation",
+        "operation": "createZone",
+        "inputs": {
+          "name": "Oceania",
+          "memberIds": [],
+          "customFields": {}
+        },
+        "outputs": {
+          "zone_id": "$.data.createZone.id"
+        }
+      },
+      {
+        "step_id": "discover_australia_country_id",
+        "type": "query",
+        "operation": "countries",
+        "purpose": "id_discovery",
+        "inputs": {
+          "options": {
+            "sort": {
+              "name": "ASC"
+            },
+            "filter": {
+              "name": {
+                "contains": "Australia"
+              },
+              "code": {
+                "contains": "AU"
+              }
+            },
+            "filterOperator": "OR"
+          }
+        },
+        "outputs": {
+          "australia_country_id": "$.data.countries.items[0].id"
+        }
+      },
+      {
+        "step_id": "add_australia_to_zone",
+        "type": "mutation",
+        "operation": "addMembersToZone",
+        "inputs": {
+          "zoneId": "{from:create_zone.zone_id}",
+          "memberIds": ["{from:discover_australia_country_id.australia_country_id}"]
+        },
+        "outputs": {
+          "zone_id": "$.data.addMembersToZone.id"
+        }
+      },
+      {
+        "step_id": "discover_new_zealand_country_id",
+        "type": "query",
+        "operation": "countries",
+        "purpose": "id_discovery",
+        "inputs": {
+          "options": {
+            "sort": {
+              "name": "ASC"
+            },
+            "filter": {
+              "name": {
+                "contains": "New Zealand"
+              },
+              "code": {
+                "contains": "NZ"
+              }
+            },
+            "filterOperator": "OR"
+          }
+        },
+        "outputs": {
+          "new_zealand_country_id": "$.data.countries.items[0].id"
+        }
+      },
+      {
+        "step_id": "add_new_zealand_to_zone",
+        "type": "mutation",
+        "operation": "addMembersToZone",
+        "inputs": {
+          "zoneId": "{from:create_zone.zone_id}",
+          "memberIds": ["{from:discover_new_zealand_country_id.new_zealand_country_id}"]
+        },
+        "outputs": {
+          "zone_id": "$.data.addMembersToZone.id"
+        }
+      },
+      {
+        "step_id": "create_shipping_method_flat_rate",
+        "type": "mutation",
+        "operation": "createShippingMethod",
+        "inputs": {
+          "code": "oceania-flat-rate",
+          "fulfillmentHandler": "manual-fulfillment",
+          "checker": {
+            "code": "default-shipping-eligibility-checker",
+            "arguments": [
+              {
+                "name": "orderMinimum",
+                "value": "0"
+              }
+            ]
+          },
+          "calculator": {
+            "code": "default-shipping-calculator",
+            "arguments": [
+              {
+                "name": "rate",
+                "value": "1500"
+              },
+              {
+                "name": "includesTax",
+                "value": "auto"
+              },
+              {
+                "name": "taxRate",
+                "value": "0"
+              }
+            ]
+          },
+          "translations": [
+            {
+              "languageCode": "en",
+              "name": "Flat Rate",
+              "description": "",
+              "customFields": {}
+            }
+          ],
+          "customFields": {}
+        },
+        "outputs": {
+          "shipping_method_id": "$.data.createShippingMethod.id"
+        }
+      },
+      {
+        "step_id": "restrict_shipping_method_to_oceania_zone",
+        "type": "constraint_gap",
+        "intent": "Restrict this shipping method to apply only to the 'Oceania' zone",
+        "blocking_reason": "Observed createShippingMethod payload only supports `default-shipping-eligibility-checker` with argument `orderMinimum`. No zone/destination-based checker arguments (e.g., zoneIds) are exposed in this Vendure demo instance.",
+        "suggested_resolution": "Requires enabling or implementing a zone-aware shipping eligibility checker (Vendure plugin/custom checker). The shipping method would then be created/updated with checker arguments referencing `{from:create_zone.zone_id}`."
+      }
+    ]
+  }
+  
+]
 }
+
