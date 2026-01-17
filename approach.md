@@ -177,12 +177,12 @@ Eligibility configuration maps to: <br>
 The user intent includes:
 “Shipping method should apply only to the Oceania zone” <br>
 However, inspection of the createShippingMethod payload shows:
--Only default-shipping-eligibility-checker is available
--The checker supports only orderMinimum
--No zone-, country-, or destination-based arguments are exposed
+- Only default-shipping-eligibility-checker is available
+- The checker supports only orderMinimum
+- No zone-, country-, or destination-based arguments are exposed
 This reveals a semantic gap:
--User intent: zone-based restriction
--API capability (demo instance): order-minimum-based restriction only
+- User intent: zone-based restriction
+- API capability (demo instance): order-minimum-based restriction only
 This gap is explicitly documented in the workflow as a constraint.
 
 
