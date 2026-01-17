@@ -130,18 +130,18 @@ Input: zone name = 'Oceania' → Create
 
 #### ii. Add Countries to Zone
 **UI Path:**
-Zone page → Select Country
-Search and select:
--Australia
--New Zealand
+Zone page → Select Country<br>
+Search and select:<br>
+- Australia
+- New Zealand
 
 #### iii. Create Shipping Method
-Settings → Shipping Methods → New Shipping Method
-Input:
--Name: Flat Rate
--Calculator: Flat Rate → $15
--Fulfillment Handler: Manual
--Eligibility Checker: Default
+Settings → Shipping Methods → New Shipping Method<br>
+Input:<br>
+- Name: Flat Rate
+- Calculator: Flat Rate → $15
+- Fulfillment Handler: Manual
+- Eligibility Checker: Default
 → Create
 
 ### 2. Observe underlying API Operations
