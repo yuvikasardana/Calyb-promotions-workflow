@@ -67,24 +67,6 @@ These fields must still be included in mutation inputs for successful execution.
 Entities such as promotions require `translations` input, including language code and name.
 This requirement supports localization but does not affect workflow logic or dependencies and is treated as static metadata.
 
-## Track B (Shipping)
-
-
-### Country IDs must be discovered via the `countries` query
-Countries cannot be added to a zone using name/code directly.  
-The UI searches countries by firing `countries(options)` with filter `{ name contains, code contains }`, then uses the returned `id` in `addMembersToZone`.
-
-**Impact:** adding Australia/New Zealand is inherently a discovery + mutation process.
-
-
-###  Zone membership uses `memberIds` as country IDs
-Adding a country to a zone calls:
-
-`addMembersToZone(zoneId, memberIds)`
-
-Where `memberIds` contains country IDs, not country codes.
-
-**Impact:** workflows must treat countries as “zone members” represented via IDs.
 
 ## Track B (Shipping)
 
@@ -93,17 +75,8 @@ Where `memberIds` contains country IDs, not country codes.
 Countries cannot be added to a zone using name/code directly.  
 The UI searches countries by firing `countries(options)` with filter `{ name contains, code contains }`, then uses the returned `id` in `addMembersToZone`.
 
-**Impact:** adding Australia/New Zealand is inherently a discovery + mutation process.
+ While most queries are ignored as they serve the purpose of UI refresh , adding Australia/New Zealand is inherently a discovery + mutation process which requires searching for the country's ids using queries.
 
-
-###  Zone membership uses `memberIds` as country IDs
-Adding a country to a zone calls:
-
-`addMembersToZone(zoneId, memberIds)`
-
-Where `memberIds` contains country IDs, not country codes.
-
-**Impact:** workflows must treat countries as “zone members” represented via IDs.
 
 
 ###  Flat rate shipping uses default calculator with required args
@@ -114,7 +87,7 @@ The shipping method uses:
   - `includesTax = "auto"`
   - `taxRate = "0"`
 
-**Impact:** rate must be converted to minor units and additional calculator args must be included.
+Rate must be converted to minor units and additional calculator args must be included.
 
 ### Shipping Method can be created without a name 
  The only required fields to be filled in shipping method are fulfillment handler, default shipping eligibility checker and shipping calculator. 
@@ -131,8 +104,7 @@ with only one argument observed:
 - `orderMinimum`
 
 No zone/destination-based eligibility arguments (e.g., zoneIds) are available.
-
-**Impact:** “shipping method applies only to Oceania zone” cannot be implemented using only this demo instance configuration.
+ “Shipping method applies only to Oceania zone” cannot be implemented using only this demo instance configuration.
 
 ###  Zone-only shipping requirement becomes a constraint gap
 User intent requires zone-based restriction, but the observed checker configuration does not support zone filtering.
