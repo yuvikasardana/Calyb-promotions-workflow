@@ -198,20 +198,20 @@ Dependencies were identified by tracking IDs returned from mutations and queries
    - zone_id
    - resolved country_id
 
-- createShippingMethod is currently  independent of the zone due to eligibility checker limitations
-However in a generalized setting createShippingMethod would require a zone id to bind it to a particualr zone.
+- createShippingMethod is currently  independent of the zone due to eligibility checker limitations.
+However in a generalized setting createShippingMethod would require a zone id to bind it to a particular zone.
 
 ## Structural Standardization (Track B)
 
 The workflow is encoded as a dependency-aware intermediate representation:<br>
 
--Mutations represent executable state transitions
+- Mutations represent executable state transitions
 
--Queries represent identifier discovery
+- Queries represent identifier discovery
 
--Outputs expose only required identifiers
+- Outputs expose only required identifiers
 
--The unmet zone-restriction requirement is modeled explicitly as a constraint_gap
+- The unmet zone-restriction requirement is modeled explicitly as a constraint_gap
 
 **This preserves correctness while remaining machine-readable and executable where possible**
 
