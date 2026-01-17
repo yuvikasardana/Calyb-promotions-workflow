@@ -31,7 +31,7 @@ I followed the following process for identifying the mapping:
 First, I determined the UI sequence required to create the expected promotion:
 
 #### i. Create Customer Group
-**UI Path:** Customer → Customer Groups → Add Customer Group  
+**UI Path:** Customer → Customer Groups → Add Customer Group<br>
 Input: customer group name = `VIP` → Create
 
 #### ii. Create Promotion
@@ -115,7 +115,8 @@ I made the following assumptions for Track B:
 
 - Country codes for Australia and New Zealand are available in the system's country list and can be referenced by their standard identifiers.
 - The Vendure demo instance exposes only the default shipping eligibility checker.
--Restricting a shipping method to a zone is considered part of user intent, even if it cannot be fully expressed in the current UI/API configuration.
+- Restricting a shipping method to a zone is considered part of user intent, even if it cannot be fully expressed in the current UI/API configuration.
+- Default values are chosen for the fields that were not defined by the user. Example: minimum order value = $0
 
 ### Heuristic: Mapping (Track B)
 Just like Track A , UI-to-API mapping was performed using **network tab inspection** and validating through the GraphQL API (Admin API) . 
@@ -125,15 +126,15 @@ I followed the following process for identifying the mapping:
 First, I determined the UI sequence required to fulfil the user request:
  #### i. Create Shipping Zone
 **UI Path:** 
-Settings → Zones → New Zone
-Input: zone name = 'Oceania' → Create
+- Settings → Zones → New Zone
+- Input: zone name = 'Oceania' → Create
 
 #### ii. Add Countries to Zone
 **UI Path:**
-Zone page → Select Country<br>
-Search and select:<br>
-- Australia
-- New Zealand
+- Zone page → Select Country
+- Search and select:
+   - Australia
+   - New Zealand
 
 #### iii. Create Shipping Method
 Settings → Shipping Methods → New Shipping Method<br>
@@ -146,18 +147,16 @@ Input:<br>
 
 ### 2. Observe underlying API Operations
 Using Network tab inspection, the following operations were identified:
-
 Mutations (state-changing)
+- createZone: fired on clicking create in the zone section
 
--createZone: fired on clicking create in the zone section
+- addMembersToZone: triggered each time a country is to be added to a Zone
 
--addMembersToZone: triggered each time a country is to be added to a Zone
-
--createShippingMethod: triggered on creating the shipping method
+- createShippingMethod: triggered on creating the shipping method
 
 Queries (discovery / UI-driven)
 
-CountryList
+- CountryList
 Fired repeatedly while typing in the country selector to resolve { id, name, code }
 
 Additional queries such as  zoneMembers were triggered by the UI for refresh and verification but do not affect system state.
@@ -165,18 +164,18 @@ Additional queries such as  zoneMembers were triggered by the UI for refresh and
 ### 3. Map UI fields to API inputs
 Zone creation maps directly to createZone(name, memberIds)
 Country selection requires:
--querying countries
--extracting the selected `country.id`
--passing it as `memberId`s to `addMembersToZone`
+- querying countries
+- extracting the selected `country.id`
+- passing it as `memberId`s to `addMembersToZone`
 
 Flat Rate shipping maps to:
--`default-shipping-calculator`
--`rate = 1500`
--`includesTax = auto`
--`taxRate = 0`
+- `default-shipping-calculator`
+- `rate = 1500`
+- `includesTax = auto`
+- `taxRate = 0`
 Eligibility configuration maps to:
--`default-shipping-eligibility-checker`
--only supported argument: `orderMinimum`
+- `default-shipping-eligibility-checker`
+- only supported argument: `orderMinimum`
 
 
 ### 4. Semantic Gap Identification
