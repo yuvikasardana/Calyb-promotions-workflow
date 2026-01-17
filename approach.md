@@ -162,25 +162,20 @@ Fired repeatedly while typing in the country selector to resolve { id, name, cod
 Additional queries such as  zoneMembers were triggered by the UI for refresh and verification but do not affect system state.
 
 ### 3. Map UI fields to API inputs
-Zone creation maps directly to createZone(name, memberIds)
+Zone creation maps directly to createZone(name, memberIds) <br>
 Country selection requires:
 - querying countries
 - extracting the selected `country.id`
 - passing it as `memberId`s to `addMembersToZone`
 
-Flat Rate shipping maps to:
-- `default-shipping-calculator`
-- `rate = 1500`
-- `includesTax = auto`
-- `taxRate = 0`
-Eligibility configuration maps to:
+Eligibility configuration maps to: <br>
 - `default-shipping-eligibility-checker`
 - only supported argument: `orderMinimum`
 
 
 ### 4. Semantic Gap Identification
 The user intent includes:
-“Shipping method should apply only to the Oceania zone”
+“Shipping method should apply only to the Oceania zone” <br>
 However, inspection of the createShippingMethod payload shows:
 -Only default-shipping-eligibility-checker is available
 -The checker supports only orderMinimum
