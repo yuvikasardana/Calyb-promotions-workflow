@@ -192,13 +192,13 @@ Dependencies were identified by tracking IDs returned from mutations and queries
 
 - `createZone`  return a  zone_id
 
-- to add countries to a xzone you need `country_id` obtained from the query `countryList`
+- to add countries to a zone you need `country_id` obtained from the query `countryList`
 
-addMembersToZone depends on:
--zone_id
--resolved country_id
+- addMembersToZone depends on:
+   - zone_id
+   - resolved country_id
 
-createShippingMethod is currently  independent of the zone due to eligibility checker limitations
+- createShippingMethod is currently  independent of the zone due to eligibility checker limitations
 However in a generalized setting createShippingMethod would require a zone id to bind it to a particualr zone.
 
 ## Structural Standardization (Track B)
