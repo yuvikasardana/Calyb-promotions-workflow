@@ -116,7 +116,11 @@ The shipping method uses:
 
 **Impact:** rate must be converted to minor units and additional calculator args must be included.
 
-
+## Shipping Method can be created without a name 
+ The only required fields to be filled in shipping method are fulfillment handler, default shipping eligibility checker and shipping calculator. 
+ If the name or code field is kept empty the API is simply called with an empty string input for both of these fields. 
+ It is likely that these fields are for user convenience as a shipping method is recognized by the system via its id.
+ 
 ###  Only default shipping eligibility checker is available in demo instance
 The shipping method checker is:
 
